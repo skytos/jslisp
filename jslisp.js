@@ -69,7 +69,7 @@ formalsOf = second
 bodyOf = third
 
 evcon = (lines, table) =>
-	meaninf(questionOf(car(lines)), table) ? meaning(answerOf(car(lines)), table) :
+	meaning(questionOf(car(lines)), table) ? meaning(answerOf(car(lines)), table) :
 		evcon(cdr(lines), table)
 questionOf = first
 answerOf = second
