@@ -126,6 +126,9 @@ pi = ts => {
 		return pl(cdr(ts))
 	} else if (t == ']') {
 		throw "unmatched ]"
+	} else if (t == "'") {
+		let r = pi(cdr(ts))
+		return [list('quote', r[0]), r[1]]
 	} else {
 		return [t, cdr(ts)]
 	}
@@ -139,6 +142,10 @@ pl = ts => {
 		return [cons(r1[0], r2[0]), r2[1]]
 	} else if (t == ']') {
 		return [null, cdr(ts)]
+	} else if (t == "'") {
+		let r1 = pi(cdr(ts))
+		let r2 = pl(r1[1])
+		return [cons(list('quote', r1[0]), r2[0]), r2[1]]
 	} else {
 		let r = pl(cdr(ts))
 		return [cons(t, r[0]), r[1]]
@@ -149,6 +156,7 @@ tokenize = str =>
 	list(...str.
 		replace(/\[/g, " [ ").
 		replace(/\]/g, " ] ").
+		replace(/\'/g, " ' ").
 		trim().
 		split(/\s+/))
 
